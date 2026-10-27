@@ -23,7 +23,7 @@
 ## 快速安装
 
 1. 下载根目录 [docker-compose.yml](docker-compose.yml)，放到自己的项目文件夹。
-2. 在极空间 Docker → Compose 中选择这份已有文件，创建/部署项目。普通 Docker 环境也可在该文件夹执行：
+2. SSH登录Linux服务器，进入保存YAML的项目目录，执行：
 
 ```bash
 docker compose up -d
@@ -39,9 +39,9 @@ mailuo/
 └── secrets/             # 数据库密码、实例密钥及初始化码
 ```
 
-使用 `./data`、`./secrets` 相对目录挂载，没有写死 NAS 路径。目录由 Compose 按实际配置文件位置解析；在极空间选择已保存的文件，避免编辑另一份配置。**修改挂载后要重新部署/创建容器，仅重启不会应用新的挂载。**
+使用 `./data`、`./secrets` 相对目录挂载，没有写死服务器路径。目录由Compose按实际配置文件位置解析，执行命令前进入该项目目录。**修改挂载后要重新部署/创建容器，仅重启不会应用新的挂载。**
 
-- [极空间详细安装说明](docs/INSTALL.md)
+- [Linux服务器部署指南](docs/INSTALL.md)
 - [升级与备份](docs/MAINTENANCE.md)
 - [通知订阅与隐私说明](docs/NOTIFICATIONS.md)
 - [常见问题](docs/FAQ.md)

@@ -16,7 +16,7 @@ body:
     id: environment
     attributes:
       label: 部署环境
-      description: 极空间型号/系统版本、CPU架构、Docker及服务状态；不要提供公网IP或账号密码。
+      description: Linux发行版、CPU架构、Docker/Compose版本及服务状态；不要提供公网IP或账号密码。
     validations:
       required: true
   - type: textarea

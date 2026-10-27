@@ -12,7 +12,7 @@ docker compose exec -T postgres pg_dump -U mailuo mailuo > mailuo.sql
 docker compose exec -T app tar -C /run/mailuo -czf - . > mailuo-secrets.tar.gz
 ```
 
-将备份复制到另一处安全位置，不要提交GitHub或公开分享。极空间可通过容器终端/部署者工具执行等价备份。
+将备份复制到另一处安全位置，不要提交GitHub或公开分享。在服务器的YAML目录执行；需要Docker权限时为docker命令加sudo。
 
 如要直接复制data目录，必须先停止app和postgres，保留文件权限复制data和secrets；不要将运行中的数据库文件直接复制后当作一致性备份。
 
