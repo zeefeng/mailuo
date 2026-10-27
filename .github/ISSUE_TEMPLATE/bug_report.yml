@@ -1,0 +1,31 @@
+name: 问题反馈
+description: 安装失败、异常或操作问题
+title: "[问题] "
+body:
+  - type: markdown
+    attributes:
+      value: 请勿上传密码、初始化码、secrets、数据库或私人事项。日志和路径请先脱敏。
+  - type: input
+    id: version
+    attributes:
+      label: 应用版本
+      placeholder: 0.1.0-beta.1
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 部署环境
+      description: 极空间型号/系统版本、CPU架构、Docker及服务状态；不要提供公网IP或账号密码。
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 复现步骤、预期和实际情况
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 脱敏日志或截图

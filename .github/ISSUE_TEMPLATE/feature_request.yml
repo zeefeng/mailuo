@@ -1,0 +1,15 @@
+name: 功能建议
+description: 描述你实际遇到的事项管理场景
+title: "[建议] "
+body:
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 你正在处理什么事情？
+      description: 请描述现有操作遇到的具体问题，不要公开私人内容。
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: 希望怎样完成？

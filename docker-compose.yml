@@ -1,0 +1,70 @@
+# Mailuo Community 0.1.0-beta.1 / linux/amd64 / port 9000.
+# Store this YAML in your project folder: data/ and secrets/ are created beside it.
+name: ${COMPOSE_PROJECT_NAME:-mailuo}
+services:
+  init:
+    image: registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:0.1.0-beta.1-amd64
+    platform: linux/amd64
+    user: "0:0"
+    entrypoint: ["node", "scripts/community/init.cjs"]
+    volumes:
+      - ./secrets:/run/mailuo
+    restart: "no"
+  postgres:
+    image: registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:postgres-16-alpine-amd64
+    platform: linux/amd64
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: mailuo
+      POSTGRES_DB: mailuo
+      POSTGRES_PASSWORD_FILE: /run/mailuo/db-password
+      TZ: Asia/Shanghai
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./secrets:/run/mailuo:ro
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U mailuo -d mailuo"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+  migrate:
+    image: registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:0.1.0-beta.1-migrate-amd64
+    platform: linux/amd64
+    environment:
+      CHECKPOINT_DISABLE: "1"
+      PRISMA_HIDE_UPDATE_MESSAGE: "1"
+    volumes:
+      - ./secrets:/run/mailuo:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+  app:
+    image: registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:0.1.0-beta.1-amd64
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "${MAILUO_BIND:-0.0.0.0}:${APP_PORT:-9000}:3000"
+    environment:
+      MAILUO_TELEMETRY_DISABLED: ${MAILUO_TELEMETRY_DISABLED:-0}
+      MAILUO_TRUST_PROXY: ${MAILUO_TRUST_PROXY:-0}
+      MAILUO_ENV: prod
+      MAILUO_DEPLOYMENT_MODE: selfhost
+      MAILUO_COOKIE_SECURE: ${MAILUO_COOKIE_SECURE:-0}
+      APP_VERSION: 0.1.0-beta.1
+      GIT_COMMIT: 94e6648
+      TZ: Asia/Shanghai
+    volumes:
+      - ./secrets:/run/mailuo:ro
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
