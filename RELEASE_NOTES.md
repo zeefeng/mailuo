@@ -11,3 +11,6 @@
 附件包含：独立Compose、文档安装包、SHA256校验文件。完整说明见仓库README与docs。
 
 部署文档现已统一为通用Linux服务器命令行操作，镜像版本和YAML保持不变；最新部署指南见https://github.com/zeefeng/mailuo/blob/main/docs/INSTALL.md。
+
+
+2026-11-03 文档更新：仓库新增脑图、多层子任务、缩放与账号全局背景的开发进展说明。这些功能尚未包含在本Release的0.1.0-beta.1镜像中；本次仅更新文档包与校验附件，不改变Compose、镜像或版本标签。详见https://github.com/zeefeng/mailuo/blob/main/docs/DEVELOPMENT.md。
