@@ -31,7 +31,7 @@ cd ~/mailuo
 if [ -e docker-compose.yml ]; then
   echo 'docker-compose.yml 已存在，请先确认是否为已有部署，不要覆盖。'
 else
-  curl -fL https://github.com/zeefeng/mailuo/releases/download/v0.1.0-beta.1/docker-compose.yml -o docker-compose.yml
+  curl -fL https://github.com/zeefeng/mailuo/releases/download/v0.1.0-beta.2/docker-compose.yml -o docker-compose.yml
 fi
 ```
 
@@ -62,7 +62,7 @@ docker compose logs init
 
 在浏览器打开`http://服务器IP:9000`，填写初始化码，自定义账号密码。没有统一默认账号密码。首次设置后初始化入口关闭，重启不重置账号。
 
-init日志中的8080是固定示例，实际以YAML的9000或修改后的宿主机端口为准。初始化的版本提醒/开发者公告默认勾选，可取消；创建账号时保存选择，见[订阅说明](NOTIFICATIONS.md)。
+访问端口以YAML的9000或自行修改的宿主机端口为准。初始化的版本提醒/开发者公告默认勾选，可取消；创建账号时保存选择，见[订阅说明](NOTIFICATIONS.md)。
 
 首次设置请限制在可信访问范围；公网长期访问建议配置HTTPS反向代理并把MAILUO_COOKIE_SECURE设为1。HTTP直连则保持0，否则登录Cookie不能正常保存。
 

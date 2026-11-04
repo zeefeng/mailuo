@@ -16,16 +16,39 @@ docker compose exec -T app tar -C /run/mailuo -czf - . > mailuo-secrets.tar.gz
 
 如要直接复制data目录，必须先停止app和postgres，保留文件权限复制data和secrets；不要将运行中的数据库文件直接复制后当作一致性备份。
 
-## 升级
+## 升级到 beta.2
 
-1. 备份数据库、secrets与现用YAML。
-2. 在原项目中更新镜像标签及匹配的版本信息，保留data、secrets目录。
-3. 重新拉取镜像并重建项目，migrate执行增量迁移。
-4. 确认服务健康，并检查原账号、事项是否保留。
+本步骤适用于使用当前相对目录挂载的`0.1.0-beta.1`实例。请在原项目目录操作，保留原项目名、`data`和`secrets`。如果使用自定义端口、HTTPS、反向代理、环境变量或不同挂载，先把原配置与新版比较，保留自己的配置，不要直接覆盖。
 
-不要执行migrate reset或db push，也不要删除data/secrets来“修复升级”。数据库迁移后不能默认认为切回旧镜像就一定兼容，应根据具体版本说明恢复。
+先停止应用写入并备份（数据库保持运行）：
 
-本次0.1.0-beta.1是对前期测试beta.5的重新编号，语义版本比较不会将其视为beta.5的新版本，需要手动更新；原镜像标签保留。
+```bash
+umask 077
+docker compose stop app
+cp docker-compose.yml docker-compose.before-beta2.yml
+docker compose exec -T postgres pg_dump -U mailuo -d mailuo -Fc > mailuo-before-beta2.dump
+tar -czf mailuo-secrets-before-beta2.tar.gz secrets
+curl -fL https://github.com/zeefeng/mailuo/releases/download/v0.1.0-beta.2/docker-compose.yml -o docker-compose.beta2.yml
+```
+
+核对新旧配置后更新。以下假定主配置文件名为`docker-compose.yml`；原文件名不同时按实际调整，并始终使用同一个Compose项目。
+
+```bash
+cp docker-compose.beta2.yml docker-compose.yml
+docker compose config --quiet
+docker compose pull
+# 重新运行一次性初始化与迁移，现有密钥不会重建。
+docker compose up -d --force-recreate init migrate app
+docker compose ps -a
+docker compose logs --tail=100 migrate app
+curl -f http://127.0.0.1:9000/api/health
+```
+
+`init`和`migrate`正常退出0，`app`与`postgres`应为healthy；健康接口版本应为`0.1.0-beta.2`。自定义端口请修改上面的9000。登录原账号，检查事项、任务、计划时间，再使用脑图/列表切换和全局背景。
+
+本次新增日历投递/回传、任务父子关系及个人背景的增量迁移，原任务保持顶层，旧账号默认主题不变。个人上传图片存数据库，随数据库备份，不依赖应用容器文件。
+
+不得执行`migrate reset`、`db push`或删除数据目录。若拉取或迁移失败，保留备份及数据，先检查日志；不要继续录入数据。完成升级并使用父子任务后，旧版会平铺任务且不能正确维护子树，不应直接切回beta.1。数据库恢复应在停机、核对备份及明确接受恢复点之后进行，不能用旧备份覆盖升级后的新增数据。
 
 ## 旧命名卷迁移
 

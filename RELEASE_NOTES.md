@@ -1,16 +1,13 @@
-脉络 Mailuo Community 首个 GitHub 测试发行：0.1.0-beta.1。
+脉络 Mailuo Community 0.1.0-beta.2。
 
-将安排、执行与总结放在同一个个人工作台。支持x86_64/amd64私有部署，镜像由阿里云公开仓库提供，无需仓库账号。
+本次实际提供新版linux/amd64 Docker镜像，包含脑图概览、脑图内悬浮编辑、阶段/同级任务/多层子任务、分支折叠、25%–200%缩放及账号全局壁纸与自定义上传。
 
-下载docker-compose.yml，放入项目目录，通过SSH登录Linux服务器，在该目录执行docker compose up -d，访问http://服务器IP:9000。从init日志取得初始化码并自定义账号密码。
+新安装：下载docker-compose.yml，在Linux服务器的项目目录执行docker compose up -d，默认9000端口。保留YAML旁的data和secrets目录。
 
-数据位于YAML旁的data/、secrets/，不是Docker命名卷。旧命名卷实例先备份迁移，不能直接启动空目录。默认开发者信息订阅可取消，确认后才登记最小实例信息；不会自动升级。
+beta.1升级：先停止app写入，备份数据库、secrets及旧YAML；在原项目目录使用匹配的beta.2配置，保留原项目名、端口、HTTPS及存储设置，再拉取镜像并执行增量迁移。不使用reset/db push，不删除data/secrets。升级后检查原账号、事项和任务。多层子任务投入使用后不应直接退回旧镜像。
 
-仅提供社区发行配置和文档，应用源码未公开，不宣称开源。请先使用非关键数据试用并备份。
+详细安装：https://github.com/zeefeng/mailuo/blob/main/docs/INSTALL.md
+升级与备份：https://github.com/zeefeng/mailuo/blob/main/docs/MAINTENANCE.md#升级到-beta2
+功能说明：https://github.com/zeefeng/mailuo/blob/main/docs/FEATURES.md
 
-附件包含：独立Compose、文档安装包、SHA256校验文件。完整说明见仓库README与docs。
-
-部署文档现已统一为通用Linux服务器命令行操作，镜像版本和YAML保持不变；最新部署指南见https://github.com/zeefeng/mailuo/blob/main/docs/INSTALL.md。
-
-
-2026-11-03 文档更新：仓库新增脑图、多层子任务、缩放与账号全局背景的开发进展说明。这些功能尚未包含在本Release的0.1.0-beta.1镜像中；本次仅更新文档包与校验附件，不改变Compose、镜像或版本标签。详见https://github.com/zeefeng/mailuo/blob/main/docs/DEVELOPMENT.md。
+当前仍为免费社区测试版，仅linux/amd64，不支持ARM；应用源码未公开。附件提供Compose、文档包及SHA256校验文件。旧beta.1发行保留。

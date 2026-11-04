@@ -1,0 +1,3 @@
+registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:0.1.0-beta.2-amd64@sha256:a49878900370e16d9ff6c6147c690ddde9824ae34ee2d6dca50e5002930507fa
+registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:0.1.0-beta.2-migrate-amd64@sha256:8b9329b0dbb399a324c393bcbc5063fafd3fe08c083f3a4b1bef35cbd202eaf7
+registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:postgres-16-alpine-amd64@sha256:075f7ba66bc9b3ce7d6b8b635208ff61cd7cf1a67d71ec530eec5d7ae0cbe571

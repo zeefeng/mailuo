@@ -6,7 +6,7 @@ Compose会从阿里云公开仓库自动拉取固定版本镜像，无需手工�
 
 **app、init和migrate使用相同版本吗？**
 
-app/init使用`0.1.0-beta.1-amd64`，migrate使用`0.1.0-beta.1-migrate-amd64`，数据库使用`postgres-16-alpine-amd64`。不要只更新其中一项到不匹配版本。
+app/init使用`0.1.0-beta.2-amd64`，migrate使用`0.1.0-beta.2-migrate-amd64`，数据库使用`postgres-16-alpine-amd64`。不要只更新其中一项到不匹配版本。
 
 **init或migrate退出了？**
 

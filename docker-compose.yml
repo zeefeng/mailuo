@@ -1,9 +1,8 @@
-# Mailuo Community 0.1.0-beta.1 / linux/amd64 / port 9000.
-# Store this YAML in your project folder: data/ and secrets/ are created beside it.
+# Generated online Community installation: publish and verify all three public images before distribution.
 name: ${COMPOSE_PROJECT_NAME:-mailuo}
 services:
   init:
-    image: registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:0.1.0-beta.1-amd64
+    image: registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:0.1.0-beta.2-amd64
     platform: linux/amd64
     user: "0:0"
     entrypoint: ["node", "scripts/community/init.cjs"]
@@ -31,7 +30,7 @@ services:
       timeout: 5s
       retries: 12
   migrate:
-    image: registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:0.1.0-beta.1-migrate-amd64
+    image: registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:0.1.0-beta.2-migrate-amd64
     platform: linux/amd64
     environment:
       CHECKPOINT_DISABLE: "1"
@@ -43,7 +42,7 @@ services:
         condition: service_healthy
     restart: "no"
   app:
-    image: registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:0.1.0-beta.1-amd64
+    image: registry.cn-hangzhou.aliyuncs.com/mailuo/mailuo:0.1.0-beta.2-amd64
     platform: linux/amd64
     restart: unless-stopped
     ports:
@@ -54,8 +53,8 @@ services:
       MAILUO_ENV: prod
       MAILUO_DEPLOYMENT_MODE: selfhost
       MAILUO_COOKIE_SECURE: ${MAILUO_COOKIE_SECURE:-0}
-      APP_VERSION: 0.1.0-beta.1
-      GIT_COMMIT: 94e6648
+      APP_VERSION: 0.1.0-beta.2
+      GIT_COMMIT: 740c20f52af719e92feda6bf6cf3cda23253652f
       TZ: Asia/Shanghai
     volumes:
       - ./secrets:/run/mailuo:ro
