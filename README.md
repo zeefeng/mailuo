@@ -31,6 +31,22 @@
 
 [功能操作说明](docs/FEATURES.md) · [下载 beta.2](https://github.com/zeefeng/mailuo/releases/tag/v0.1.0-beta.2)
 
+## beta.2 功能截图
+
+以下为开发环境中的功能演示，展示脑图概览、任务展开及全局背景设置；截图左侧的“平台管理”入口不属于Community社区版。使用用户提供的原始截图，未改动界面内容。
+
+### 事项概览：先看整体，按需展开
+
+![beta.2事项概览，开发环境演示](assets/screenshots/beta2-mindmap-overview.png)
+
+### 脑图展开：直接编辑与继续拆解任务
+
+![beta.2脑图展开与新增子任务，开发环境演示](assets/screenshots/beta2-mindmap-expanded.png)
+
+### 全局背景：内置壁纸、自定义上传和柔化
+
+![beta.2全局背景设置](assets/screenshots/beta2-background-settings.png)
+
 ## 界面预览
 
 以下四张为 Community `0.1.0-beta.1` 的真实初始界面，供参考基础布局；beta.2新增脑图与全局背景。
